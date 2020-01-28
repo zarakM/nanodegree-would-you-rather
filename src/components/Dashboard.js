@@ -1,31 +1,42 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent } from "react";
+import Tab from "react-bootstrap/Tab";
+import Tabs from "react-bootstrap/Tabs";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 import Question from './Question';
-import { TabContent, TabPane, Nav, NavItem, NavLink, Row, Col } from 'reactstrap';
-import classnames from 'classnames';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 
 class DashBoard extends PureComponent {
-  state = {
-    activeTab: '1'
-  };
-
-  toggle(tab) {
-    if (this.state.activeTab !== tab) {
-      this.setState({
-        activeTab: tab
-      });
-    }
-  }
-
   render() {
     const { unansweredQuestions, answeredQuestions } = this.props;
     return (
       <div>
-        <Nav tabs>
+        <Tabs
+          style={{ marginTop: "40px", marginLeft: "80px" }}
+          defaultActiveKey="Unanswered"
+          id="answer_tab"
+        >
+          <Tab eventKey="Unanswered" title="Unanswered">
+            {unansweredQuestions.map(qid => (
+              <Col key={qid} sm="6" md="4">
+                <Question id={qid} />
+              </Col>
+            ))}
+          </Tab>
+          <Tab eventKey="Answered" title="Answered">
+            {answeredQuestions.map(qid => (
+              <Col key={qid} sm="6" md="4">
+                <Question id={qid} />
+              </Col>
+            ))}
+          </Tab>
+        </Tabs>
+
+
+
+        {/* <Nav tabs>
           <NavItem>
             <NavLink
-              className={classnames({ active: this.state.activeTab === '1' })}
+              className={{ active: this.state.activeTab === '1' }}
               onClick={() => { this.toggle('1'); }}
             >
               Unanswered
@@ -33,7 +44,7 @@ class DashBoard extends PureComponent {
           </NavItem>
           <NavItem>
             <NavLink
-              className={classnames({ active: this.state.activeTab === '2' })}
+              className={{ active: this.state.activeTab === '2' }}
               onClick={() => { this.toggle('2'); }}
             >
               Answered
@@ -46,7 +57,7 @@ class DashBoard extends PureComponent {
             <Row>
               {unansweredQuestions.map(qid =>
                 <Col key={qid} sm="6" md="4">
-                  <Question id={qid}/>
+                   <Question id={qid}/> 
                 </Col>
               )}
             </Row>
@@ -55,31 +66,33 @@ class DashBoard extends PureComponent {
             <Row>
               {answeredQuestions.map(qid =>
                 <Col key={qid} sm="6" md="4">
-                  <Question id={qid}/>
+                   <Question id={qid}/> 
                 </Col>
               )}
             </Row>
           </TabPane>
-        </TabContent>
+        </TabContent> */}
       </div>
     );
   }
 }
 
 DashBoard.propTypes = {
-  answeredPolls : PropTypes.array,
-  unansweredPolls : PropTypes.array
+  answeredPolls: PropTypes.array,
+  unansweredPolls: PropTypes.array
 };
 
-function mapStateToProps ({ questions, users, authedUser }) {
+function mapStateToProps({ questions, users, authedUser }) {
   const user = users[authedUser];
-  const answeredQuestions = Object.keys(user.answers)
-    .sort((a,b) => questions[b].timestamp - questions[a].timestamp);
+  const answeredQuestions = Object.keys(user.answers).sort(
+    (a, b) => questions[b].timestamp - questions[a].timestamp
+  );
   return {
-    unansweredQuestions : Object.keys(questions).filter(qid => !answeredQuestions.includes(qid))
-      .sort((a,b) => questions[b].timestamp - questions[a].timestamp),
+    unansweredQuestions: Object.keys(questions)
+      .filter(qid => !answeredQuestions.includes(qid))
+      .sort((a, b) => questions[b].timestamp - questions[a].timestamp),
     answeredQuestions
-  }
+  };
 }
 
-export default connect(mapStateToProps)(DashBoard)
+export default connect(mapStateToProps)(DashBoard);
