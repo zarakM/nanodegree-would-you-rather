@@ -26,7 +26,7 @@ let users = {
     name: 'John Doe',
     avatarURL: "https://api.adorable.io/avatars/20/john.doe.png",
     answers: {
-      "xj352vofupe1dqz9emx13r": 'optionOne',
+      "xj352vofupe1dqz9emx13r": 'optionTwo',
       "vthrdm985a262al8qx3do": 'optionTwo',
       "6ni6ok3ym7mf1p33lnez": 'optionTwo'
     },

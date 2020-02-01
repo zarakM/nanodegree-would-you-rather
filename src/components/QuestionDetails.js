@@ -1,17 +1,6 @@
 import React, { PureComponent } from "react";
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardTitle,
-  FormGroup,
-  Label,
-  Input,
-  Form,
-  Button,
-  Row,
-  Col
-} from "reactstrap";
+import { Card, Form, Button, Row, Col } from "react-bootstrap";
+import ProgressBar from "react-bootstrap/ProgressBar";
 import { connect } from "react-redux";
 import { handleAnswer } from "../redux/actions/shared";
 import PropTypes from "prop-types";
@@ -35,95 +24,86 @@ class QuestionDetails extends PureComponent {
   render() {
     const {
       question,
-      questionAuthor,
       answer,
       total,
       percOne,
-      percTwo
+      percTwo,
+      questionAuthor
     } = this.props;
     const { selectedOption } = this.state;
 
     return (
-      <Row>
-        <Col sm="12" md={{ size: 6, offset: 3 }}>
+      <Row style={{ marginTop: "20px" }} className="justify-content-md-center">
+        <Col xs lg="6">
           <Card>
-            <CardHeader>
-              {/* <img
-                src={user.avatarURL}
+            <Card.Header>
+              <img
+                src={questionAuthor.avatarURL}
                 className="avatar"
-                alt={`Avatar of ${user.name}`}
+                alt={`Avatar of ${questionAuthor.name}`}
               />
-              <span>{user.name}</span> */}
-              {/* <User id={questionAuthor.id} /> */}
-            </CardHeader>
-            <CardBody>
-              <CardTitle>Would You Rather</CardTitle>
+              <span>{questionAuthor.name}</span> */}
+            </Card.Header>
+            <Card.Body>
+              <Card.Title>Would You Rather</Card.Title>
               {answer ? (
                 <div>
-                  <FormGroup>
-                    <FormGroup check disabled>
-                      <Label check>
-                        <Input
+                  <fieldset>
+                    <Form.Group as={Row}>
+                      <Col sm={10}>
+                        <Form.Check
                           type="radio"
                           checked={answer === "optionOne"}
-                          readOnly
-                        />{" "}
-                        {question.optionOne.text}
-                      </Label>
-                    </FormGroup>
-                    <FormGroup check disabled>
-                      <Label check>
-                        <Input
+                          label={question.optionOne.text}
+                          disabled
+                        />
+                        <Form.Check
                           type="radio"
                           checked={answer === "optionTwo"}
-                          readOnly
-                        />{" "}
-                        {question.optionTwo.text}
-                      </Label>
-                    </FormGroup>
-                  </FormGroup>
-                  <div className="progress">
-                    <div
-                      className="progress-one"
-                      style={{ width: `${percOne}%` }}
-                    >{`${percOne}%`}</div>
-                    <div
-                      className="progress-two"
-                      style={{ width: `${percTwo}%` }}
-                    >{`${percTwo}%`}</div>
-                  </div>
+                          label={question.optionTwo.text}
+                          disabled
+                        />
+                      </Col>
+                    </Form.Group>
+                  </fieldset>
+                  <ProgressBar>
+                    <ProgressBar striped variant="info" now={percOne} key={1} />
+                    <ProgressBar striped variant="danger" now={percTwo} key={2} />
+                  </ProgressBar>
                   <div className="total">Total number of votes: {total}</div>
                 </div>
               ) : (
                 <Form onSubmit={this.handleSubmit}>
-                  <FormGroup tag="fieldset">
-                    <FormGroup>
-                      <Label>
-                        <Input
+                  <fieldset>
+                    <Form.Group as={Row}>
+                      <Col sm={10}>
+                        <Form.Check
                           type="radio"
                           name="radio1"
                           value="optionOne"
                           onChange={this.radioSelected}
-                        />{" "}
-                        {question.optionOne.text}
-                      </Label>
-                    </FormGroup>
-                    <FormGroup>
-                      <Label>
-                        <Input
+                          label={question.optionTwo.text}
+                        />
+                        <Form.Check
                           type="radio"
                           name="radio1"
                           value="optionTwo"
                           onChange={this.radioSelected}
-                        />{" "}
-                        {question.optionTwo.text}
-                      </Label>
-                    </FormGroup>
-                  </FormGroup>
-                  <Button disabled={selectedOption === ""}>Submit</Button>
+                          label={question.optionOne.text}
+                        />
+                      </Col>
+                    </Form.Group>
+                  </fieldset>
+                  {selectedOption === "" ? (
+                    <Button disabled>Submit</Button>
+                  ) : (
+                    <Button variant="primary" type="submit">
+                      Submit
+                    </Button>
+                  )}
                 </Form>
               )}
-            </CardBody>
+            </Card.Body>
           </Card>
         </Col>
       </Row>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Card from 'react-bootstrap/Card';
-import {  withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 class Question extends React.Component {
@@ -11,14 +11,14 @@ class Question extends React.Component {
     this.props.history.push(path);
   }
   render() {
-    const {question, auth} = this.props;
+    const {poll, user} = this.props;
     return (
-      <Card style={{margin:"20px"}} onClick={(e) => this.loadQuestionDetails(e, question.id)}>
+      <Card style={{margin:"20px"}} onClick={(e) => this.loadQuestionDetails(e, poll.id)}>
         <Card.Body>
           <Card.Title>Would You Rather</Card.Title>
           <ul>
-            <li className={question.optionOne.votes.includes(auth) ? "optionSelected" : ""}>{question.optionOne.text}</li>
-            <li className={question.optionTwo.votes.includes(auth) ? "optionSelected" : ""}>{question.optionTwo.text}</li>
+            <li className={poll.optionOne.votes.includes(user) ? "selected" : ""} >{poll.optionOne.text}</li>
+            <li className={poll.optionTwo.votes.includes(user) ? "selected" : ""} >{poll.optionTwo.text}</li>
           </ul>
         </Card.Body>
       </Card>
@@ -27,14 +27,13 @@ class Question extends React.Component {
 }
 
 Question.propTypes = {
-  question: PropTypes.object.isRequired,
-  history: PropTypes.object.isRequired
+  poll: PropTypes.object.isRequired,
 };
 
 function mapStateToProps (state, { id }) {
   return {
-    question : state.questions[id],
-    auth: state.authedUser
+    poll : state.questions[id],
+    user: state.authedUser
   }
 }
 

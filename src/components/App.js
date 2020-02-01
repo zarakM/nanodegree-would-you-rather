@@ -5,6 +5,7 @@ import { Route, Switch} from 'react-router-dom';
 import Logout from "./Logout";
 import Dashboard from './Dashboard'
 import Appbar from './Appbar'
+import QuestionDetails from './QuestionDetails'
 
 import Login from "./Login";
 
@@ -22,8 +23,8 @@ class App extends Component {
             <Appbar/>
             <Route path="/" exact component={Dashboard} />
             {/* <Route path="/leaderboard" exact component={LeaderBoard} />
-            <Route path="/add" component={NewQuestion} />
-            <Route path="/questions/:id" component={QuestionDetails} /> */}
+            <Route path="/add" component={NewQuestion} />*/}
+            <Route path="/questions/:id" component={QuestionDetails} /> 
             <Route exact path="/logout" component={Logout} />
           </div>
         ) : (
