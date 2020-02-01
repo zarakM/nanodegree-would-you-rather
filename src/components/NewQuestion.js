@@ -1,99 +1,91 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import PropTypes from 'prop-types'
-import {
-    Button,
-    Card,
-    CardBody,
-    CardTitle,
-    Col,
-    Form,
-    FormGroup,
-    Input,
-    Label,
-    Row,
-} from 'reactstrap';
-import { handleAddQuestion } from '../redux/actions/shared'
-import { Redirect } from 'react-router-dom'
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { Button, Card, Col, Form, Input, Label, Row } from "react-bootstrap";
+import { handleAddQuestion } from "../redux/actions/shared";
+import { Redirect } from "react-router-dom";
 
 class NewQuestion extends Component {
-    state = {
-        optionOne: '',
-        optionTwo: '',
-        redirect: false
-    };
+  state = {
+    optionOne: "",
+    optionTwo: "",
+    redirect: false
+  };
 
-    handleOptionOneChange = (event) => {
-        event.preventDefault();
-        this.setState({
-          optionOne : event.target.value
-        })
-      };
+  handleOptionOneChange = event => {
+    event.preventDefault();
+    this.setState({
+      optionOne: event.target.value
+    });
+  };
 
-      handleOptionTwoChange = (event) => {
-        event.preventDefault();
-        this.setState({
-          optionTwo : event.target.value
-        })
-      };
+  handleOptionTwoChange = event => {
+    event.preventDefault();
+    this.setState({
+      optionTwo: event.target.value
+    });
+  };
 
-    handleSubmit = (event) => {
-        event.preventDefault();
-        const { optionOne, optionTwo } = this.state;
-        this.props.addQuestion(optionOne, optionTwo);
-        this.setState({ redirect: true })
-    };
+  handleSubmit = event => {
+    event.preventDefault();
+    const { optionOne, optionTwo } = this.state;
+    this.props.addQuestion(optionOne, optionTwo);
+    this.setState({ redirect: true });
+  };
 
-    render() {
-        if (this.state.redirect) {
-          return <Redirect to='/' />
-        }
-        const { optionOne, optionTwo } = this.state;
-        return (
-            <Row>
-              <Col sm="12" md={{ size: 6, offset: 3 }}>
-                <Card>
-                  <CardBody>
-                    <CardTitle>Would You Rather</CardTitle>
-                    <Form onSubmit={this.handleSubmit}>
-                      <FormGroup>
-                        <Label for="optionOne">Option One</Label>
-                        <Input type="text"
-                          name="optionOne"
-                          value={optionOne}
-                          onChange={this.handleOptionOneChange}
-                          placeholder="Option One" />
-                      </FormGroup>
-                      <FormGroup>
-                        <Label for="optionTwo">Option Two</Label>
-                        <Input type="text"
-                          name="optionTwo"
-                          value={optionTwo}
-                          onChange={this.handleOptionTwoChange}
-                          placeholder="Option Two" />
-                      </FormGroup>
-                      <Button disabled={optionOne === '' || optionTwo === ''}>Submit</Button>
-                    </Form>
-                  </CardBody>
-                </Card>
-              </Col>
-            </Row>
-          );
+  render() {
+    if (this.state.redirect) {
+      return <Redirect to="/" />;
     }
+    const { optionOne, optionTwo } = this.state;
+    return (
+      <Row style={{ marginTop: "20px" }} className="justify-content-md-center">
+        <Col xs lg="6">
+          <Card>
+            <Card.Body>
+              <Card.Title>Would You Rather</Card.Title>
+              <Form onSubmit={this.handleSubmit}>
+                <Form.Group>
+                  <Form.Label>Option One</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Option One"
+                    value={optionOne}
+                    onChange={this.handleOptionOneChange}
+                  />
+                </Form.Group>
+                <Form.Group>
+                  <Form.Label>Option One</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Option Two"
+                    value={optionTwo}
+                    onChange={this.handleOptionTwoChange}
+                  />
+                </Form.Group>
+                <Button type="submit" disabled={optionOne === "" || optionTwo === ""}>
+                  Submit
+                </Button>
+              </Form>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
+    );
+  }
 }
 
 NewQuestion.propTypes = {
   authedUser: PropTypes.string,
-  addQuestion: PropTypes.func.isRequired,
+  addQuestion: PropTypes.func.isRequired
 };
 
 function mapDispatchToProps(dispatch) {
-    return {
-      addQuestion: (optionOne, optionTwo) => {
-        dispatch(handleAddQuestion(optionOne, optionTwo))
-      }
+  return {
+    addQuestion: (optionOne, optionTwo) => {
+      dispatch(handleAddQuestion(optionOne, optionTwo));
     }
-  }
+  };
+}
 
-
-export default connect(null, mapDispatchToProps)(NewQuestion)
+export default connect(null, mapDispatchToProps)(NewQuestion);

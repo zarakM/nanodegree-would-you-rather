@@ -3,7 +3,8 @@ import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import { unsetAuthedUser } from '../redux/actions/authedUser'
+import { Link } from "react-router-dom";
+import { unsetAuthedUser } from "../redux/actions/authedUser";
 
 import { connect } from "react-redux";
 
@@ -11,10 +12,10 @@ const Appbar = props => {
   const { user } = props;
   return (
     <Navbar bg="dark" variant="dark" expand="lg">
-      <Navbar.Brand href="#home">Would you rather</Navbar.Brand>
+      <Navbar.Brand as={Link} to="/">Would you rather</Navbar.Brand>
       <Nav className="mr-auto">
-        <Nav.Link href="#home">Add Poll</Nav.Link>
-        <Nav.Link href="#features">LeaderBoard</Nav.Link>
+        <Nav.Link as={Link} to="/add"> Add Poll </Nav.Link>
+        <Nav.Link as={Link} to="/LeaderBoard">LeaderBoard</Nav.Link>
       </Nav>
       <Form inline>
         <img
@@ -25,7 +26,14 @@ const Appbar = props => {
         <span style={{ width: "100px", padding: "10px", color: "grey" }}>
           {user.name}
         </span>
-        <Button variant="outline-primary" onClick={()=>{props.dispatch(unsetAuthedUser()) }}>Logout</Button>
+        <Button
+          variant="outline-primary"
+          onClick={() => {
+            props.dispatch(unsetAuthedUser());
+          }}
+        >
+          Logout
+        </Button>
       </Form>
     </Navbar>
   );

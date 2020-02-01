@@ -8,7 +8,6 @@ import middleware from "./redux/middleware";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./index.css";
 import App from "./components/App";
-import NewQuestion from "./components/NewQuestion";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 // import LeaderBoard from './components/LeaderBoard'
