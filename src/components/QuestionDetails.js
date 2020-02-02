@@ -42,7 +42,7 @@ class QuestionDetails extends PureComponent {
                 className="avatar"
                 alt={`Avatar of ${author.name}`}
               />
-              <span>{author.name}</span> */}
+              <span>{author.name}</span>}
             </Card.Header>
             <Card.Body>
               <Card.Title>Would You Rather</Card.Title>
