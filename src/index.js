@@ -10,9 +10,6 @@ import "./index.css";
 import App from "./components/App";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-// import LeaderBoard from './components/LeaderBoard'
-// import Login from "./Login";
-// import QuestionDetails from "./components/QuestionDetails"
 
 const store = createStore(reducer, middleware);
 

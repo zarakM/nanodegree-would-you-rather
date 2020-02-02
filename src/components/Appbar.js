@@ -5,6 +5,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 import { unsetAuthedUser } from "../redux/actions/authedUser";
+import Logout from "./Logout"
 
 import { connect } from "react-redux";
 
@@ -27,10 +28,9 @@ const Appbar = props => {
           {user.name}
         </span>
         <Button
+          as={Link}
           variant="outline-primary"
-          onClick={() => {
-            props.dispatch(unsetAuthedUser());
-          }}
+          to="/logout"
         >
           Logout
         </Button>

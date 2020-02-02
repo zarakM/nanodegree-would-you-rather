@@ -28,7 +28,7 @@ class QuestionDetails extends PureComponent {
       total,
       percOne,
       percTwo,
-      questionAuthor
+      author
     } = this.props;
     const { selectedOption } = this.state;
 
@@ -38,11 +38,11 @@ class QuestionDetails extends PureComponent {
           <Card>
             <Card.Header>
               <img
-                src={questionAuthor.avatarURL}
+                src={author.avatarURL}
                 className="avatar"
-                alt={`Avatar of ${questionAuthor.name}`}
+                alt={`Avatar of ${author.name}`}
               />
-              <span>{questionAuthor.name}</span> */}
+              <span>{author.name}</span> */}
             </Card.Header>
             <Card.Body>
               <Card.Title>Would You Rather</Card.Title>
@@ -113,14 +113,14 @@ class QuestionDetails extends PureComponent {
 
 QuestionDetails.propTypes = {
   question: PropTypes.object,
-  questionAuthor: PropTypes.object,
+  author: PropTypes.object,
   answer: PropTypes.string,
   percOne: PropTypes.string.isRequired,
   percTwo: PropTypes.string.isRequired
 };
 
-function financial(x) {
-  return Number.parseFloat(x).toFixed(2);
+function convert_to_fixed(number) {
+  return Number.parseFloat(number).toFixed(2);
 }
 
 function mapStateToProps({ questions, users, authedUser }, { match }) {
@@ -131,13 +131,13 @@ function mapStateToProps({ questions, users, authedUser }, { match }) {
   if (answers.hasOwnProperty(question.id)) {
     answer = answers[question.id];
   }
-  const questionAuthor = users[question.author];
+  const author = users[question.author];
   total = question.optionOne.votes.length + question.optionTwo.votes.length;
-  percOne = financial((question.optionOne.votes.length / total) * 100);
-  percTwo = financial((question.optionTwo.votes.length / total) * 100);
+  percOne = convert_to_fixed((question.optionOne.votes.length / total) * 100);
+  percTwo = convert_to_fixed((question.optionTwo.votes.length / total) * 100);
   return {
     question,
-    questionAuthor,
+    author,
     answer,
     total,
     percOne,
