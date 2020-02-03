@@ -33,6 +33,7 @@ class QuestionDetails extends PureComponent {
     const { selectedOption } = this.state;
 
     return (
+      
       <Row style={{ marginTop: "20px" }} className="justify-content-md-center">
         <Col xs lg="6">
           <Card>
@@ -67,8 +68,8 @@ class QuestionDetails extends PureComponent {
                     </Form.Group>
                   </fieldset>
                   <ProgressBar>
-                    <ProgressBar striped variant="info" now={percOne} key={1} />
-                    <ProgressBar striped variant="danger" now={percTwo} key={2} />
+                    <ProgressBar striped variant="info" label={percOne} now={percOne} key={1} />
+                    <ProgressBar striped variant="danger" label={percTwo} now={percTwo} key={2} />
                   </ProgressBar>
                   <div className="total">Total number of votes: {total}</div>
                 </div>
@@ -136,6 +137,7 @@ function mapStateToProps({ questions, users, authedUser }, { match }) {
   percOne = convert_to_fixed((question.optionOne.votes.length / total) * 100);
   percTwo = convert_to_fixed((question.optionTwo.votes.length / total) * 100);
   return {
+    id,
     question,
     author,
     answer,

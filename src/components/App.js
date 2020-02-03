@@ -1,7 +1,7 @@
-import React, { Component,Fragment } from "react";
+import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { handleInitialData } from "../redux/actions/shared";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 import Logout from "./Logout";
 import Dashboard from "./Dashboard";
 import Appbar from "./Appbar";
@@ -19,21 +19,22 @@ class App extends Component {
     const { isLogin } = this.props;
 
     return (
-        <Switch>
-          {isLogin ? (
-            <Fragment>
-              <Appbar />
-              <Route path="/" exact component={Dashboard} />
-              <Route path="/LeaderBoard" exact component={LeaderBoard} />
-              <Route path="/add" component={NewQuestion} />
-              <Route path="/questions/:id" component={QuestionDetails} />
-              <Route exact path="/logout" component={Logout} />
-            </Fragment>
-          ) : (
-            <Route path="/" exact component={Login} />
-          )}
-          <Route component={ErrorRoute} />
-        </Switch>
+      <Switch>
+        {isLogin ? (
+          <div>
+            <Appbar />
+            <Route path="/" exact component={Dashboard} />
+            <Route path="/leaderboard" exact component={LeaderBoard} />
+            <Route path="/add" exact component={NewQuestion} />
+            <Route path="/questions/:id" exact component={QuestionDetails} />
+            <Route path="/logout" exact component={Logout} />
+            <Route exact path="/404" component={ErrorRoute} />
+            <Redirect to="/404"/>
+          </div>
+        ) : (
+          <Route path="/" component={Login} />
+        )}
+      </Switch>
     );
   }
 }

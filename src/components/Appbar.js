@@ -1,11 +1,9 @@
-import React, { Component } from "react";
+import React from "react";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
-import { unsetAuthedUser } from "../redux/actions/authedUser";
-import Logout from "./Logout"
 
 import { connect } from "react-redux";
 
@@ -16,7 +14,7 @@ const Appbar = props => {
       <Navbar.Brand as={Link} to="/">Would you rather</Navbar.Brand>
       <Nav className="mr-auto">
         <Nav.Link as={Link} to="/add"> Add Poll </Nav.Link>
-        <Nav.Link as={Link} to="/LeaderBoard">LeaderBoard</Nav.Link>
+        <Nav.Link as={Link} to="/leaderboard">LeaderBoard</Nav.Link>
       </Nav>
       <Form inline>
         <img

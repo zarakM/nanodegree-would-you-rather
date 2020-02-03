@@ -60,59 +60,6 @@ const Login = props => {
   );
 };
 
-// class Login extends PureComponent {
-//   constructor(props) {
-//     super(props);
-//   }
-
-//   handleSubmit = event => {
-//     event.preventDefault();
-//     let form_id = event.target.user_id.value;
-//     const { users } = this.props;
-//     let id;
-
-//     Object.keys(users).map(i => {
-//       users[i].name === form_id ? (id = users[i].id) : (id = id);
-//     });
-
-//     const { authenticate } = this.props;
-//     authenticate(id);
-//   };
-
-//   render() {
-//     const { users } = this.props;
-//     return (
-//       <div>
-//         <Navbar bg="light" expand="lg">
-//           <Navbar.Brand href="#home">Would you rather</Navbar.Brand>
-//         </Navbar>
-
-//         <div style={divStyle}>
-//           <Form onSubmit={this.handleSubmit}>
-//             <Form.Group>
-//               <Form.Label>Select User</Form.Label>
-
-//               <Form.Control id="user_id" as="select">
-//                 <option disabled value="">
-//                   Please Select
-//                 </option>
-//                 {Object.keys(users).map(user => (
-//                   <option id="user_id" key={user} value={user.id}>
-//                     {users[user].name}
-//                   </option>
-//                 ))}
-//               </Form.Control>
-//             </Form.Group>
-//             <Button variant="primary" type="submit">
-//               Submit
-//             </Button>
-//           </Form>
-//         </div>
-//       </div>
-//     );
-//   }
-// }
-
 Login.propTypes = {
   users: PropTypes.object.isRequired,
   authenticate: PropTypes.func.isRequired

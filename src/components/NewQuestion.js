@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { Button, Card, Col, Form, Input, Label, Row } from "react-bootstrap";
+import { Button, Card, Col, Form, Row } from "react-bootstrap";
 import { handleAddQuestion } from "../redux/actions/shared";
 import { Redirect } from "react-router-dom";
 

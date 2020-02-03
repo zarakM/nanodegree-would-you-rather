@@ -2,11 +2,16 @@ import React from "react";
 import { connect } from "react-redux";
 import Table from "react-bootstrap/Table";
 import PropTypes from "prop-types";
+import { Redirect } from "react-router-dom";
 
-const Leaderboard = props => {
-  const { users } = props;
-  return (
+const Leaderboard = (props) => {
+  const { users, authedUser } = props;
+
+
+  console.log(authedUser)
+  return (!authedUser)?<Redirect to='/' />:
     <Table>
+
       <thead>
         <tr>
           <th>Rank</th>
@@ -34,17 +39,18 @@ const Leaderboard = props => {
         ))}
       </tbody>
     </Table>
-  );
 };
 
 Leaderboard.propTypes = {
   users: PropTypes.array.isRequired
 };
 
-const mapStateToProps = ({ users }) => {
+const mapStateToProps = ({ users,authedUser }) => {
+
   const userScore = user =>
     Object.keys(user.answers).length + user.questions.length;
   return {
+    authedUser:authedUser,
     users: Object.values(users).sort(
       (first, second) => userScore(second) - userScore(first)
     )
