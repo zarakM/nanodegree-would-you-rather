@@ -3,18 +3,33 @@ import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import { Link } from "react-router-dom";
+import { Link, Redirect , withRouter } from "react-router-dom";
 
 import { connect } from "react-redux";
 
 const Appbar = props => {
-  const { user } = props;
-  return (
+  const { user, authedUser } = props;
+  console.log( props )
+  return !authedUser ? (
+    <Redirect
+      to={{
+        pathname: "/login",
+        state: { referrer: props.location.pathname }
+      }}
+    />
+  ) : (
     <Navbar bg="dark" variant="dark" expand="lg">
-      <Navbar.Brand as={Link} to="/">Would you rather</Navbar.Brand>
+      <Navbar.Brand as={Link} to="/">
+        Would you rather
+      </Navbar.Brand>
       <Nav className="mr-auto">
-        <Nav.Link as={Link} to="/add"> Add Poll </Nav.Link>
-        <Nav.Link as={Link} to="/leaderboard">LeaderBoard</Nav.Link>
+        <Nav.Link as={Link} to="/add">
+          {" "}
+          Add Poll{" "}
+        </Nav.Link>
+        <Nav.Link as={Link} to="/leaderboard">
+          LeaderBoard
+        </Nav.Link>
       </Nav>
       <Form inline>
         <img
@@ -25,11 +40,7 @@ const Appbar = props => {
         <span style={{ width: "100px", padding: "10px", color: "grey" }}>
           {user.name}
         </span>
-        <Button
-          as={Link}
-          variant="outline-primary"
-          to="/logout"
-        >
+        <Button as={Link} variant="outline-primary" to="/logout">
           Logout
         </Button>
       </Form>
@@ -39,8 +50,9 @@ const Appbar = props => {
 
 function mapStateToProps({ users, authedUser }) {
   return {
+    authedUser: authedUser,
     user: users[authedUser]
   };
 }
 
-export default connect(mapStateToProps, null)(Appbar);
+export default withRouter(connect(mapStateToProps, null)(Appbar));

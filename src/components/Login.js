@@ -26,6 +26,12 @@ const Login = props => {
 
     const { authenticate } = props;
     authenticate(id);
+
+    let location
+    props.location.state?location=props.location.state.referrer: location = "/"
+
+    console.log( location )
+    props.history.push(location)
   };
 
   const { users } = props;

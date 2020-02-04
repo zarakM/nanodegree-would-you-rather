@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { handleInitialData } from "../redux/actions/shared";
-import { Route, Switch, Redirect } from "react-router-dom";
+import { Route, Switch, Redirect, withRouter } from "react-router-dom";
 import Logout from "./Logout";
 import Dashboard from "./Dashboard";
 import Appbar from "./Appbar";
@@ -20,20 +20,43 @@ class App extends Component {
 
     return (
       <Switch>
-        {isLogin ? (
-          <div>
+        <Route exact path="/">
+          {isLogin ? (
+            <Fragment>
+              <Appbar />
+              <Dashboard />
+            </Fragment>
+          ) : (
+            <Redirect to="/login" />
+          )}
+        </Route>
+
+        <Route exact path="/leaderboard">
+          <Fragment>
             <Appbar />
-            <Route path="/" exact component={Dashboard} />
-            <Route path="/leaderboard" exact component={LeaderBoard} />
-            <Route path="/add" exact component={NewQuestion} />
-            <Route path="/questions/:id" exact component={QuestionDetails} />
-            <Route path="/logout" exact component={Logout} />
-            <Route exact path="/404" component={ErrorRoute} />
-            <Redirect to="/404"/>
-          </div>
-        ) : (
-          <Route path="/" component={Login} />
-        )}
+            <LeaderBoard />
+          </Fragment>
+        </Route>
+
+        <Route exact path="/add">
+          <Fragment>
+            <Appbar />
+            <NewQuestion />
+          </Fragment>
+        </Route>
+
+        <Route exact path="/questions/:id" render={(props)=>
+        
+            <QuestionDetails {...props} />
+        }/>
+        <Route exact path="/logout" component={Logout} />
+        <Route exact path="/login" component={Login} />
+        <Route>
+          <Fragment>
+            <Appbar />
+            <ErrorRoute />
+          </Fragment>
+        </Route>
       </Switch>
     );
   }
@@ -53,4 +76,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
